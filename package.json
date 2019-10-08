@@ -52,7 +52,8 @@
   },
   "scripts": {
     "pretty": "prettier --write 'src/**/*.js'",
-    "start": "react-scripts start",
+    "server": "$(npm bin)/json-server --watch --port 3001 db.json",
+    "start": "npm run server & react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
