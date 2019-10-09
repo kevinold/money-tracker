@@ -1,3 +1,5 @@
+import axios from 'axios';
+import _ from 'lodash';
 import { accountsDB, remoteAccountsDB, destroyAccountsDB } from './pouchdb';
 import {
   storageToState,
@@ -39,7 +41,20 @@ function destroy() {
 }
 
 function loadAll() {
-  return accountsDB()
+  return axios
+    .get('http://localhost:3001/accounts')
+    .then(resp => {
+      const newData = _.map(resp.data, account => {
+        _.set(account, '_id', account.id);
+        return _.omit(account, 'id');
+      });
+
+      return newData.map(storageToState);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  /*return accountsDB()
     .allDocs({
       include_docs: true,
       conflicts: true,
@@ -47,11 +62,18 @@ function loadAll() {
       endkey: 'A\uffff'
     })
     .then(response => Promise.all(response.rows.map(resolveConflicts)))
-    .then(docs => docs.map(storageToState));
+    .then(docs => docs.map(storageToState));*/
 }
 
 function save(account) {
-  return accountsDB()
+  axios
+    .post('http://localhost:3001/accounts', { ...stateToStorage(account) })
+    .then(resp => console.log(resp))
+    .catch(err => {
+      console.log(err);
+    });
+
+  /*return accountsDB()
     .get(account.id)
     .then(doc => accountsDB().put({ ...doc, ...stateToStorage(account) }))
     .catch(err => {
@@ -60,7 +82,7 @@ function save(account) {
         _id: account.id,
         ...stateToStorage(account)
       });
-    });
+    });*/
 }
 
 function archive(accountId) {

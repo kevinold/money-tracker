@@ -1,5 +1,37 @@
 {
-  "accounts": [],
+  "accounts": [
+    {
+      "balance": {
+        "USD": 500000
+      },
+      "USD": 500000,
+      "currencies": ["USD"],
+      "group": "cash",
+      "name": "Kevin-Cash",
+      "on_dashboard": true,
+      "id": 1
+    },
+    {
+      "name": "Kevin-Bank2",
+      "group": "bank",
+      "balance": {
+        "USD": 0
+      },
+      "currencies": ["USD"],
+      "on_dashboard": true,
+      "id": 2
+    },
+    {
+      "name": "Kevin-Bank3",
+      "group": "bank",
+      "balance": {
+        "USD": 200000
+      },
+      "currencies": ["USD"],
+      "on_dashboard": true,
+      "id": 3
+    }
+  ],
   "settings": [],
   "tags": [],
   "transactions": []
